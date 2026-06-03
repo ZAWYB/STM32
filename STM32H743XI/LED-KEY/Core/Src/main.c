@@ -101,6 +101,22 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == GPIO_PIN_SET)
+    {
+      HAL_Delay(20);   // 按键消抖
+
+      if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == GPIO_PIN_SET)
+      {
+        HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0);  // 翻转PB0 LED
+
+        while (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == GPIO_PIN_SET)
+        {
+          // 等待按键松开，防止一次按下触发多次
+        }
+
+        HAL_Delay(20);   // 松手消抖
+      }
+    }
   }
   /* USER CODE END 3 */
 }
