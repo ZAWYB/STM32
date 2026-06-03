@@ -101,21 +101,24 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    /* K1 按住：红灯亮 */
+    if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET)
+    {
+      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET);  // 红灯亮
+    }
+    else
+    {
+      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_SET);    // 红灯灭
+    }
+
+    /* K2 按住：绿灯亮 */
     if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == GPIO_PIN_SET)
     {
-      HAL_Delay(20);   // 按键消抖
-
-      if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == GPIO_PIN_SET)
-      {
-        HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0);  // 翻转PB0 LED
-
-        while (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == GPIO_PIN_SET)
-        {
-          // 等待按键松开，防止一次按下触发多次
-        }
-
-        HAL_Delay(20);   // 松手消抖
-      }
+      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_RESET);  // 绿灯亮
+    }
+    else
+    {
+      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_SET);    // 绿灯灭
     }
   }
   /* USER CODE END 3 */
